@@ -14,7 +14,7 @@ import re
 import os
 
 
-to_path = r'E:\NetEase_cloud_music\healing'
+#to_path = r'E:\NetEase_cloud_music\healing'
  
 def Header(url):
     #创建请求头部
@@ -84,7 +84,7 @@ def write_to_wav(name,id_,to_path):
     musicUrl='http://music.163.com/song/media/outer/url?id='+id_+'.mp3'            
     try:
         print('正在下载',name)
-        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\healing\%s.wav'% name)
+        urllib.request.urlretrieve(musicUrl,to_path+'%s.wav'% name)
         print('下载成功')
         return True
     except:
