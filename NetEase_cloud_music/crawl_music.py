@@ -34,12 +34,13 @@ def lyricsCrawer(music_id):
     #l是字典类型的  l字典里面读取键lyc得到一个value 而value又是一个字典类型的 再读取键lyric得到时间戳和歌词
     data=l["lrc"]["lyric"]
     #利用正则表达式去掉歌词前面的时间戳
-#    re_lyrics=re.compile(r"\[.*\]")
+    re_lyrics=re.compile(r"\[.*\]")
     #将data字符串中的re_lyrcs替换成空
-    lyc=re.sub(re_lyrics,"",data)
-    lyc=lyc.strip()
+    #lyc=re.sub(re_lyrics,"",data)
+    #lyc=lyc.strip()
     #print(lyc)
-    return lyc
+#    return lyc
+    return data
  
 def get_music_name_id(url):
     HtmlStr=str(Header(url))
@@ -61,23 +62,7 @@ def get_music_name_id(url):
     idlist3=Mid.findall(result)
  
     return namelist2,idlist3
- 
-#def write_to_file(namelist,idlist,path):
-#    num=0
-#    for id_ in idlist:
-#        Mlyc=lyricsCrawer(id_)
-#
-#        filepath = os.path.join(path, namelist[num] + ".txt")
-#        try:
-#            f=open(filepath,"a",encoding='utf-8')
-#        except FileNotFoundError:
-#            print('FileNotFoundError',num)
-#            break        
-#        
-#        f.write(Mlyc)
-#        f.close()
-#        num+=1
-#    print("一共%d首歌词" %num)
+
 
 def write_to_file(name,id_,path):
     Mlyc=lyricsCrawer(id_)
@@ -117,7 +102,7 @@ def download_Lyrics_in_music(music_url,path):
 
 
 
-def download_wav_in_album(play_url):
+def download_wav_in_album(play_url,to_path):
 
     music_name,music_id = get_music_name_id(play_url)
     
@@ -126,17 +111,13 @@ def download_wav_in_album(play_url):
         if write_to_wav(name,id_,to_path):
             write_to_file(name,id_,to_path)
     
-    
 
-    
-    
-    pass
-    
+        
 if __name__ == '__main__':
     
     url=r'https://music.163.com/playlist?id=2335548255'
 
-    download_wav_in_album(url)
+    download_wav_in_album(url,to_path)
     
     
     
