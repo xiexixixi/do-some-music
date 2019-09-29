@@ -68,27 +68,31 @@ def write_to_file(name,id_,path):
     Mlyc=lyricsCrawer(id_)
 
     filepath = os.path.join(path, name + ".txt")
-    
+    print("开始下载",name)
     try:
         f=open(filepath,"a",encoding='utf-8')
     except FileNotFoundError:
         print('FileNotFoundError')
         return False
-    f.write(Mlyc)
-    f.close()
-    print('Successful download')
-    return True
+    if len(Mlyc) > 100 and '[' in Mlyc:
+        f.write(Mlyc)
+        f.close()
+        print('歌词下载成功')
+        return True
+    else:
+        print('歌词下载失败')
+        return False
 
 
 def write_to_wav(name,id_,to_path):
     musicUrl='http://music.163.com/song/media/outer/url?id='+id_+'.mp3'            
     try:
-        print('正在下载',name)
-        urllib.request.urlretrieve(musicUrl,to_path+'%s.wav'% name)
-        print('下载成功')
+#        print('正在下载',name)
+        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\healing\%s.wav'% name)
+        print('歌曲下载成功\n')
         return True
     except:
-        print('下载失败')    
+        print('歌曲下载失败\n')
         return False
 
 
@@ -108,8 +112,8 @@ def download_wav_in_album(play_url,to_path):
     
     for name,id_ in zip(music_name,music_id):
 #        print('fuck',name,id_)
-        if write_to_wav(name,id_,to_path):
-            write_to_file(name,id_,to_path)
+        if write_to_file(name,id_,to_path):
+            write_to_wav(name,id_,to_path)
     
 
         
