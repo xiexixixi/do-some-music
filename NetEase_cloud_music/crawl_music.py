@@ -6,49 +6,152 @@ Created on Fri Sep 27 15:45:22 2019
 """
 
 import requests
+import pandas as pd
 from bs4 import BeautifulSoup
 import urllib.request
+import json
+import re
+import os
+
+
+to_path = r'E:\NetEase_cloud_music\healing'
  
-headers = {
-    'Referer':'http://music.163.com/',
-    'Host':'music.163.com',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    }
+def Header(url):
+    #创建请求头部
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4882.400 QQBrowser/9.7.13059.400"}
+    req = urllib.request.Request(url, headers=headers)
+    #打开url
+    reponse = urllib.request.urlopen(req)
+    lycJson = reponse.read().decode("utf-8","ignore")
+    return lycJson
  
-# 歌单的url地址
-play_url = 'http://music.163.com/playlist?id=2898916057'
+def lyricsCrawer(music_id):
+    url = 'http://music.163.com/api/song/lyric?' + 'id=' + str(music_id) + '&lv=1&kv=1&tv=-1'  # 括号中填入歌曲id
+    lyc=Header(url)
+    #进行json的解码
+    l=json.loads(lyc)
+    #l是字典类型的  l字典里面读取键lyc得到一个value 而value又是一个字典类型的 再读取键lyric得到时间戳和歌词
+    data=l["lrc"]["lyric"]
+    #利用正则表达式去掉歌词前面的时间戳
+#    re_lyrics=re.compile(r"\[.*\]")
+    #将data字符串中的re_lyrcs替换成空
+    lyc=re.sub(re_lyrics,"",data)
+    lyc=lyc.strip()
+    #print(lyc)
+    return lyc
  
-# 获取页面内容
-s = requests.session()
-response=s.get(play_url,headers = headers).content
+def get_music_name_id(url):
+    HtmlStr=str(Header(url))
+    #第一次正则表达式筛选
+    pat1=r'<ul class="f-hide"><li><a href="/song\?id=\d*?">.*</a></li>'
+    #<ul class="f-hide"><li><a href="/song\?id=\d*?">.*</a></li></ul>
+    Html=re.compile(pat1,re.S)
+    list1=Html.findall(HtmlStr)
+    result=list1[0]
  
-#使用bs4匹配出对应的歌曲名称和地址
-s = BeautifulSoup(response,'lxml')
-main = s.find('ul',{'class':'f-hide'})
+    #第二次正则表达式筛选出name id
+    pat2=r'<li><a href="/song\?id=\d*?">(.*?)</a></li>'#歌名
+    pat3=r'<li><a href="/song\?id=(\d*?)">.*?</a></li>'#歌id
+    Mname=re.compile(pat2)
+    namelist2=Mname.findall(result)
+    #print(namelist2)
  
+    Mid=re.compile(pat3)
+    idlist3=Mid.findall(result)
  
-lists=[]
-for music in main.find_all('a'):
-    list=[]
-    # print('{} : {}'.format(music.text, music['href']))
-    musicUrl='http://music.163.com/song/media/outer/url'+music['href'][5:]+'.mp3'
-    musicName=music.text
-    # 单首歌曲的名字和地址放在list列表中
-    list.append(musicName)
-    list.append(musicUrl)
-    # 全部歌曲信息放在lists列表中
-    lists.append(list)
+    return namelist2,idlist3
  
-print(lists)
- 
-# 下载列表中的全部歌曲，并以歌曲名命名下载后的文件，文件位置为当前文件夹
-for i in lists:
-    url=i[1]
-    name=i[0]
+#def write_to_file(namelist,idlist,path):
+#    num=0
+#    for id_ in idlist:
+#        Mlyc=lyricsCrawer(id_)
+#
+#        filepath = os.path.join(path, namelist[num] + ".txt")
+#        try:
+#            f=open(filepath,"a",encoding='utf-8')
+#        except FileNotFoundError:
+#            print('FileNotFoundError',num)
+#            break        
+#        
+#        f.write(Mlyc)
+#        f.close()
+#        num+=1
+#    print("一共%d首歌词" %num)
+
+def write_to_file(name,id_,path):
+    Mlyc=lyricsCrawer(id_)
+
+    filepath = os.path.join(path, name + ".txt")
+    
+    try:
+        f=open(filepath,"a",encoding='utf-8')
+    except FileNotFoundError:
+        print('FileNotFoundError')
+        return False
+    f.write(Mlyc)
+    f.close()
+    print('Successful download')
+    return True
+
+
+def write_to_wav(name,id_,to_path):
+    musicUrl='http://music.163.com/song/media/outer/url?id='+id_+'.mp3'            
     try:
         print('正在下载',name)
-        urllib.request.urlretrieve(url,'./healing/%s.mp3'% name)
+        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\healing\%s.wav'% name)
         print('下载成功')
+        return True
     except:
-        print('下载失败')
+        print('下载失败')    
+        return False
+
+
+
+
+def download_Lyrics_in_music(music_url,path):
+    #输入歌曲的lrc_url，要保存的path
+    music_name,music_id=get_music_name_id(music_url)
+    write_to_file(music_name,music_id,path)
+    
+
+
+
+def download_wav_in_album(play_url):
+
+    music_name,music_id = get_music_name_id(play_url)
+    
+    for name,id_ in zip(music_name,music_id):
+#        print('fuck',name,id_)
+        if write_to_wav(name,id_,to_path):
+            write_to_file(name,id_,to_path)
+    
+    
+
+    
+    
+    pass
+    
+if __name__ == '__main__':
+    
+    url=r'https://music.163.com/playlist?id=2335548255'
+
+    download_wav_in_album(url)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
