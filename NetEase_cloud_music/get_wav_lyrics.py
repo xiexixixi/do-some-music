@@ -10,14 +10,14 @@ import pandas as pd
 import crawl_music as cm
 
 to_path = r'E:\NetEase_cloud_music\healing'
-to_path = r'/home/public/zhang_xie/xie_task/music_crawl/healing' 
+to_path = r'/home/public/zhang_xie/xie_task/music_crawl/sad' 
 
 albums_file = r'E:\NetEase_cloud_music\albums\playlist_500.csv'
-albums_file = r'/home/public/zhang_xie/xie_task/music_crawl/albums/playlist_500.csv'
+albums_file = r'/home/public/zhang_xie/xie_task/music_crawl/albums/sad_playlist_400.csv'
 
 albums_df = pd.read_csv(albums_file,header = 0)
 sr = albums_df.link
-c=4
+c=0
 for album_url in sr:
     print('------------finish album%d------------'%c)
 

@@ -8,8 +8,12 @@ Created on Sat Sep 28 11:11:18 2019
 from selenium import webdriver
 import csv
 
-to_path = r'E:\NetEase_cloud_music\albums\playlist_400.csv'
-url = 'https://music.163.com/#/discover/playlist/?order=hot&cat=%E6%B2%BB%E6%84%88&limit=35&offset=35'
+to_path = r'E:\NetEase_cloud_music\albums\sad_playlist_400.csv'
+to_path = r'E:\NetEase_cloud_music\albums\happy_playlist_400.csv'
+to_path = r'E:\NetEase_cloud_music\albums\quiet_playlist_400.csv'
+url = 'https://music.163.com/#/discover/playlist/?order=hot&cat=%E4%BC%A4%E6%84%9F&limit=35&offset=35'
+url = 'https://music.163.com/#/discover/playlist/?order=hot&cat=%E5%BF%AB%E4%B9%90&limit=35&offset=0'#happy
+url = 'https://music.163.com/#/discover/playlist/?order=hot&cat=%E5%AE%89%E9%9D%99&limit=35&offset=0'#quiet
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')

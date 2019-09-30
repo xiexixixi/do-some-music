@@ -89,7 +89,7 @@ def write_to_wav(name,id_,to_path):
     try:
 #        print('正在下载',name)
 #        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\healing\%s.wav'% name)
-        urllib.request.urlretrieve(musicUrl,r'/home/public/zhang_xie/xie_task/music_crawl/healing/%s.wav'% name)
+        urllib.request.urlretrieve(musicUrl,r'/home/public/zhang_xie/xie_task/music_crawl/sad/%s.wav'% name)
         print('歌曲下载成功\n')
         return True
     except:
