@@ -70,7 +70,7 @@ def write_to_file(name,id_,path):
     filepath = os.path.join(path, name + ".txt")
     print("开始下载",name)
     try:
-        f=open(filepath,"a",encoding='utf-8')
+        f=open(filepath,"w",encoding='utf-8')
     except FileNotFoundError:
         print('FileNotFoundError')
         return False
@@ -88,7 +88,8 @@ def write_to_wav(name,id_,to_path):
     musicUrl='http://music.163.com/song/media/outer/url?id='+id_+'.mp3'            
     try:
 #        print('正在下载',name)
-        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\healing\%s.wav'% name)
+#        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\healing\%s.wav'% name)
+        urllib.request.urlretrieve(musicUrl,r'/home/public/zhang_xie/xie_task/music_crawl/healing/%s.wav'% name)
         print('歌曲下载成功\n')
         return True
     except:
