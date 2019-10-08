@@ -85,11 +85,18 @@ def write_to_file(name,id_,path):
 
 
 def write_to_wav(name,id_,to_path):
-    musicUrl='http://music.163.com/song/media/outer/url?id='+id_+'.mp3'            
+    musicUrl='http://music.163.com/song/media/outer/url?id='+id_+'.wav'      
+    print(musicUrl)      
     try:
 #        print('正在下载',name)
-#        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\healing\%s.wav'% name)
-        urllib.request.urlretrieve(musicUrl,r'/home/public/zhang_xie/xie_task/music_crawl/sad/%s.wav'% name)
+#        urllib.request.urlretrieve(musicUrl,r'E:\NetEase_cloud_music\quiet\%s.wav'% name)
+#        urllib.request.urlretrieve(musicUrl,r'/home/public/zhang_xie/xie_task/music_crawl/happy/%s.wav'% name)
+        res = urllib.request.urlopen(musicUrl)
+        html = res.read()
+        with open(to_path+'/%s.wav'%name,mode='wb') as file:
+            file.write(html)
+        
+        
         print('歌曲下载成功\n')
         return True
     except:
@@ -117,13 +124,52 @@ def download_wav_in_album(play_url,to_path):
             write_to_wav(name,id_,to_path)
     
 
-        
-if __name__ == '__main__':
-    
-    url=r'https://music.163.com/playlist?id=2335548255'
 
-    download_wav_in_album(url,to_path)
+
+
+
+
+to_path = r'/home/public/zhang_xie/xie_task/music_crawl/happy' 
+to_path = r'E:\NetEase_cloud_music\happy'
+
+albums_file = r'/home/public/zhang_xie/xie_task/music_crawl/albums/happy_playlist_200.csv'
+albums_file = r'E:\NetEase_cloud_music\albums\happy_playlist_200.csv'
+
+albums_df = pd.read_csv(albums_file,header = 0)
+sr = albums_df.link
+c=0
+for album_url in sr:
+    print('------------finish album%d------------'%c)
+
+    try:
+        download_wav_in_album(album_url,to_path)
+    except:
+        pass
     
+    
+    c+=1
+
+
+
+
+
+
+
+
+
+
+
+
+
+# =============================================================================
+#         
+# if __name__ == '__main__':
+#     
+#     url=r'https://music.163.com/playlist?id=2335548255'
+# 
+#     download_wav_in_album(url,to_path)
+#     
+# =============================================================================
     
     
     

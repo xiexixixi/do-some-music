@@ -1,8 +1,61 @@
+schedule
+
+
 2019/9/28
 
-今日完成任务一，qq音乐网页版有限制不能爬，因此选择网易云音乐
+今日完成任务一，qq音乐网页版有限制不能爬（要下载客户端），因此选择网易云音乐
 以前的爬虫的方法爬不了歌单的链接，原因可能是标签内联，所以选择用seleium爬的
 下了一个chrome的驱动，按照网上说的做，最终成功爬到链接
 
 准备把爬去某标签的网易云音乐写成函数
+
+2019.9.28，完成爬取歌单的python文件，
+2019.9.29，完成爬取歌曲的python文件，运行即开爬
+2019.10.1，完成爬取歌词的python文件，并写成函数，运行即开爬
+2019.10.6，运行爬取歌曲歌词，完成爬去操作
+2019.10.7，surprise，下载的格式竟然还是MP3，需要格式转化，准备用格式工厂转化，可是一万首歌30G从服务器下载，转化完了20M电脑要爆炸，
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skills
+改变使用的python版本
+$ alias python='/usr/bin/python3'
+$ python --version
+
+/etc/anaconda3/bin/python
+
+/etc/anaconda3/bin/pip
+/usr/local/bin/pip2.7
+
+
+使用的python3位置
+/etc/anaconda3/bin/python
+
+
+python audio_to_midi_melodia.py以后报错
+File "/home/dutir/xieyuning/anaconda3/lib/python3.6/site-packages/soundfile.py", line 142, in <module>
+    raise OSError('sndfile library not found')
+OSError: sndfile library not found
+要了sudo权限，安装好了sndfile
+
+
+
+
+
+
+
+
+
+
 
