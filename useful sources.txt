@@ -1,0 +1,11 @@
+
+https://blog.csdn.net/SARACH_WONG/article/details/89328307		conda建立虚拟环境
+
+https://blog.csdn.net/mao_jonah/article/details/89502380	如何conda批量安装包
+
+https://blog.csdn.net/chenzhengfeng/article/details/78246483		如何linux命令行打开安装包
+
+https://zhidao.baidu.com/question/155943069.html		linux查看服务器信息
+https://blog.csdn.net/wf19930209/article/details/81877822	linux安装nVidia驱动
+
+
