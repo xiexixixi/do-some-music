@@ -1,4 +1,4 @@
-
+python audio_to_midi_melodia.py /home/dutir/xieyuning/music_crawl/he/home/dutir/xieyuning/music_crawl/healing/不仅仅是喜欢.wav /home/dutir/xieyuning/music_crawl/MIDI/song.mid 60 --smooth 0.25 --minduration 0.1 --jams
 https://blog.csdn.net/SARACH_WONG/article/details/89328307		conda建立虚拟环境
 
 https://blog.csdn.net/mao_jonah/article/details/89502380	如何conda批量安装包
@@ -7,5 +7,8 @@ https://blog.csdn.net/chenzhengfeng/article/details/78246483		如何linux命令�
 
 https://zhidao.baidu.com/question/155943069.html		linux查看服务器信息
 https://blog.csdn.net/wf19930209/article/details/81877822	linux安装nVidia驱动
+https://blog.csdn.net/kellyroslyn/article/details/91606806	linux安装nVidia驱动
+https://blog.csdn.net/SGL_LGS/article/details/100849565	linuxGUI安装nVidia驱动
 
 
+https://www.cnblogs.com/nickchen121/p/10840284.html 	tensorflow2教程

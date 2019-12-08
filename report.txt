@@ -17,9 +17,13 @@ schedule
 2019.10.15，这几天遇到很大困扰，程序需要图形化界面才能运行，需要下载一个图形化界面，在远程装界面服务器崩了，修好服务器以后，连接显示器
 	把图形化界面在显示器上装好了，进行到下一阶段
 
+装显卡
 
+2019.12.4 开始了，用spleeter分离人声，网速太慢，推
+2019.12.5 下好了，但是有个问题，就是内存太小，装不下
 
-
+2019.12.6 批量每个分类转了400+个，从另一个数据库转数据，
+12.7 爬完所有的东西（4个类分别1200首左右）
 
 
 
@@ -40,16 +44,16 @@ $ python --version
 /usr/local/bin/pip2.7
 
 
+
+
 使用的python3位置
 /etc/anaconda3/bin/python
 
 
-python audio_to_midi_melodia.py以后报错
-File "/home/dutir/xieyuning/anaconda3/lib/python3.6/site-packages/soundfile.py", line 142, in <module>
-    raise OSError('sndfile library not found')
-OSError: sndfile library not found
-要了sudo权限，安装好了sndfile
-
+查看进程	ps -elf
+显示磁盘信息	df -h
+杀死进程	kill -9 PID
+查看显卡占用情况	nvidia-smi
 
 
 

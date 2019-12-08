@@ -1,0 +1,101 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import os
+import re
+import time
+
+
+# In[2]:
+
+
+def parse_lyrics(needs):
+    """
+    解析歌词， 输出歌词时间和歌词
+    ：param needs：歌词文本
+    ：return time_list 时间序列 parse_lyrics 歌词序列
+    """
+    time_list = []
+    lyrics_sentence = []
+    for need in needs:
+        #print(need)
+        if need == "":
+            continue
+        else:
+            need = need.strip('')
+            need = need.strip("/n")
+            need = need.split("]")
+            time_list.append(need[0][1:])
+    #         print(need)
+    #         print(need[1])
+            lyrics_sentence.append(need[1])
+
+
+# In[58]:
+
+
+def _cal_last_time(ss, ee):
+    """
+    计算起始时间和终止时间的时间差，得到持续时间。
+    :param ss:  起始时间str: hh:mm:ss.mm
+    :param ee:  终止时间str: hh:mm:ss.mm
+    :return:  差值，持续时间str: hh:mm:ss.mm
+    """
+    a = [float(i) for i in ss.split(':')]
+    s = a[0] * 60 + a[1]
+
+    a = [float(i) for i in ee.split(':')]
+    e = a[0] * 60 + a[1]
+
+    div = e - s
+    part_1 = str(int(div))
+    if len(part_1) == 1:
+        part_1 = '0' + part_1
+    part_2 = div - int(div)
+    part_2 = str(int(part_2 * 100))
+    if len(part_2) == 1:
+        part_2 = '0' + part_2
+    res = '00:00:' + part_1 + '.' + part_2
+
+    return res
+
+
+# In[59]:
+
+
+def do_command(ss, ee, out):
+    """
+    通过调用控制台，执行ffmpeg指令，进行视频切割，按照时间轴，切割成小段
+    :param ss: 起始时间 str   hh:mm:ss.xxx
+    :param ee: 终止时间 str   hh:mm:ss.xxx
+    :param out: 小段输出地址
+    """
+    in_str = r'D:\谢玉宁歌词\爱太难.wav'  # 原始视频路径，使用mp3格式，之后乐器分离是mp3格式。
+    t = _cal_last_time(ss, ee)  # 计算持续时间，ee-ss
+    #print(t)  #注意下command部分， 格式前面一段是ffmpeg这个软件的地址。 -i 输入路径 -ss 起始位置 -t 持续时间 
+    command = r'C:\Users\Administrator\Desktop\ffmpeg-20191117-b741a84-win64-static\ffmpeg-20191117-b741a84-win64-static\bin\ffmpeg -i {} -ss {} -t {} {}'.format(in_str, ss, t, out)
+    os.system(command)
+
+
+# In[ ]:
+
+
+for i in range(len(time_list)-1):   # 将字幕文件解析得到的每个句子，按照时间戳截取小段视频
+    out_path = os.path.join(r"C:\Users\Administrator\Desktop\test", '{}.wav'.format(i))
+    do_command(time_list[i], time_list[i+1], out_path)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
