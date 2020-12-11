@@ -5,8 +5,6 @@
 希望能在大三一年里有所收获
 
 
-journey to awesome
-
 
 
 
